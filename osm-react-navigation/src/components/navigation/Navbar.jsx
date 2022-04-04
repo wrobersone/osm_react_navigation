@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { FaBars } from 'react-icons/fa'
+import Menu from './Menu'
 
 const Navbar = ({ toggleDrawer, routes }) => {
   return (
@@ -13,9 +14,14 @@ const Navbar = ({ toggleDrawer, routes }) => {
             <SNavbarBrand>LOGO</SNavbarBrand>
             <RightNav>
                 <NavRoutes>
-                    {routes.map((route) => (
-                        <NavRoute key={route.name} to={route.link}>{route.name}</NavRoute>
-                    ))}
+                    {routes.map((route) => {
+                        if (route.subRoutes) {
+                            return <Menu route={route} key={route.name} />
+                        }
+                        return (
+                            <NavRoute key={route.name} to={route.link}>{route.name}</NavRoute> 
+                        )
+                    })}
                 </NavRoutes>
                     <LoginButton>Sign In</LoginButton>
             </RightNav>
@@ -44,7 +50,7 @@ const NavContainer = styled.div`
     padding: 1rem;
     align-items: center;
     color: white;
-    height: 80px;
+    height: 60px;
     display: flex;
     justify-content: space-between;
     margin: 0 auto;
